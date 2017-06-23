@@ -75,12 +75,8 @@ public class JDContact implements ContactJdbcManager{
 				rlist.add(rsql);
 			}
 			close();
-			//if(rlist.isEmpty()) return null;
 			return rlist;
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		} catch (SQLException e) {e.printStackTrace();}
 		return null;
 	}
 
@@ -114,12 +110,8 @@ public class JDContact implements ContactJdbcManager{
 				rlist.add(rsql);
 			}
 			close();
-			//if(rlist.isEmpty()) return null;
 			return rlist;
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		} catch (SQLException e) {e.printStackTrace();}
 		return null;
 	}
 	/**
@@ -140,7 +132,6 @@ public class JDContact implements ContactJdbcManager{
 		int idPays = 0;
 		if(countryAbbreviation != null) idPays = this.rechercheIDPays((countryAbbreviation));
 		if(idPays  == 0 && countryAbbreviation != null) return 0;
-		System.out.println("JDContact.createAndSaveContact() " + idPays);
 	
 		PreparedStatement req =null;
 		String sql = 
@@ -171,16 +162,12 @@ public class JDContact implements ContactJdbcManager{
 				}
 				
 				
-				c.close();
+			c.close();
 			return idNewContact;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
-		
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
@@ -203,10 +190,7 @@ public class JDContact implements ContactJdbcManager{
 				req.setInt(1, id);
 				req.executeUpdate();
 				close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			} catch (SQLException e) {e.printStackTrace();}
 			
 		
 	}
@@ -218,17 +202,12 @@ public class JDContact implements ContactJdbcManager{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 		return con;
-		
 	}
 	private void close(){
 		try {
 			con.close();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		} catch (SQLException e) {e.printStackTrace();}
 	}
 	private int rechercheTag(String tag){
 		this.open();
@@ -367,29 +346,6 @@ public class JDContact implements ContactJdbcManager{
 			e.printStackTrace();
 		}
 		return 0;
-		
-	}
-	public boolean checkNomPrenom(String nom, String prenom){
-		this.open();
-		PreparedStatement req =null;
-		String sql = 
-					"SELECT contacts.id "
-				+ 	"FROM contacts "
-				+ 	"WHERE contacts.nom = ? "
-				+ "AND contacts.prenom = ?";
-		try {
-			req = con.prepareStatement(sql);
-			req.setString(1, nom);
-			req.setString(2, prenom);
-			ResultSet r = req.executeQuery();
-			close();
-			if(r.next()) return true;
-			return false;
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return false;
 	}
 		
 

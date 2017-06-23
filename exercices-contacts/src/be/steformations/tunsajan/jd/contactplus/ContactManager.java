@@ -28,21 +28,13 @@ public class ContactManager implements ContactJdbcManagerPlus {
 		Connection con=null;
 		try {
 			con = DriverManager.getConnection(url, user, pwd);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
+		} catch (SQLException e) {e.printStackTrace();}
 		return con;
-		
 	}
 	private void close(Connection con){
 		try {
 			con.close();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		} catch (SQLException e) {e.printStackTrace();}
 	}
 	@Override
 	public int countTags() {
@@ -58,10 +50,7 @@ public class ContactManager implements ContactJdbcManagerPlus {
 			if(r.next())
 			return r.getInt(1);
 			else return -1;
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		} catch (SQLException e) {e.printStackTrace();}
 		return -1;
 	}
 	@Override
@@ -94,7 +83,6 @@ public class ContactManager implements ContactJdbcManagerPlus {
 
 	@Override
 	public List<JdbcContact> getAllContacts() {
-		// TODO Auto-generated method stub
 		return new ArrayList<JdbcContact>(this.getContacts());
 	}
 	
@@ -120,20 +108,14 @@ public class ContactManager implements ContactJdbcManagerPlus {
 					liste.add(new Contact(id, prenom, nom, email , pays));
 				
 			}
-			System.out.println(liste.size()+" contacts importes");
 			return liste;
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		} catch (SQLException e) {e.printStackTrace();}
 		return null;
 	}
 	@Override
 	public List<JdbcContact> getContactsWithNamedEmail() {
 		List<JdbcContact> liste = new ArrayList<JdbcContact>();
-		List<JdbcContact> listeContact;
-		
-		listeContact = this.getAllContacts();
+		List<JdbcContact> listeContact=this.getAllContacts();
 		Iterator<JdbcContact>  it =listeContact.iterator();
 		while(it.hasNext())
 		{
@@ -142,7 +124,6 @@ public class ContactManager implements ContactJdbcManagerPlus {
 					&& c.getEmail().contains(c.getFirstname().toLowerCase())) 
 				liste.add(c);
 		}
-		System.out.println(liste.size() + " matches");
 		return liste;
 	}
 
@@ -191,7 +172,6 @@ public class ContactManager implements ContactJdbcManagerPlus {
 				mapTag.put(t.name(), listeIDTag.contains(t.id()));
 			}
 			map.put(c.getFirstname(), mapTag);
-			
 		}
 		return map;
 	}
@@ -210,13 +190,9 @@ public class ContactManager implements ContactJdbcManagerPlus {
 				int id =r.getInt("id");
 				String nom= r.getString("tag");
 				liste.add(new Tag(id, nom));
-				
 			}
 			return liste;
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		} catch (SQLException e) {e.printStackTrace();}
 		return null;
 	}
 	public List<Integer> idTagByContact(int idContact){
@@ -236,13 +212,9 @@ public class ContactManager implements ContactJdbcManagerPlus {
 			while(r.next()){
 				int id =r.getInt("tag");
 				liste.add(id);
-				
 			}
 			return liste;
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		} catch (SQLException e) {e.printStackTrace();}
 		return null;
 	}
 }
